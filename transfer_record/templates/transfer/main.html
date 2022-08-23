@@ -1,0 +1,33 @@
+{% extends 'transfer/base.html' %}
+
+{% block body %}
+<table id="example" class="table table-striped">
+        <thead>
+            <tr>
+                <th style="color: #101529; font-size: 2px;">Status Indicator</th>
+                <th>Kind</th>
+                <th>Name</th>
+                <th>Theatre</th>
+                <th>Issue Date</th>
+                <th>Status</th>
+                <th>Exception Message</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for data in all_data %}
+            <tr>
+                <td>{{ data.record_progress }}</td>
+                <td>{{ data.record_type }}</td>
+                <td>{{ data.record_annotation }}</td>
+                <td>{{ data.record_theatre }}</td>
+                <td>{{ data.record_datetime }}</td>
+                <td>{{ data.record_status }}</td>
+                <td>{{ data.record_exception_messages }}</td>
+                <td><a href="delete/"><button type="button"><i class="fa-solid fa-trash-can"></i></button>
+                    </a></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+</table>
+{% endblock %}

@@ -1,0 +1,277 @@
+body {
+    background-color: #1C2135;
+}
+div.dataTables_wrapper {
+    position: relative;
+    margin: -50px;
+}
+/****************************************************/
+
+/* Delete button */
+a.nav-link.dropdown-toggle {
+    position: absolute;
+    top: 20px;
+    left: 13px;
+    width: 44px;
+    height: 40px;
+    color: #F7F9FF;
+    background: #007BFF;
+    border-radius: 5px;
+    border: none;
+    padding-bottom: 30px;
+    text-align: center;
+    font-size: 14px;
+    z-index: 100;
+}
+
+/* Export csv button */
+button.dt-button.buttons-csv.buttons-html5 {
+    position: relative;
+    left: 53px;
+    width: 44px;
+    height: 40px;
+    color: #F7F9FF;
+    background: #007BFF;
+    border-radius: 5px;
+    border: none;
+}
+
+/** Search Field **/
+div.dataTables_wrapper div.dataTables_filter input {
+    position: relative;
+    width: 330px;
+    height: 40px;
+    border: none;
+    top: 20px;
+    right: 75px;
+    background-color: #282E43 !important;
+    color: white;
+}
+
+input[type="search"] {
+    background: #282E43;
+    font-style: italic;
+}
+
+/* Filter checkbox button */
+button.dt-button.buttons-collection.buttons-colvis {
+    position: relative;
+    float: right;
+    width: 44px;
+    height: 40px;
+    color: #F7F9FF;
+    background: #007BFF;
+    border-radius: 5px;
+    border: none;
+    z-index: 100;
+}
+
+/* Checkbox menu */
+ div.dt-button-collection {
+    position: absolute;
+    top: 40px;
+    left: 1170px !important;
+    width: 200px;
+    margin-top: 3px;
+    margin-bottom: 3px;
+    padding: 4px 4px 2px 4px;
+    border: 1px solid #ccc;
+    border: 1px solid rgba(0, 0, 0, 0.4);
+    background-color: #262E43;
+    overflow: hidden;
+    z-index: 2002;
+    border-radius: 5px;
+    box-shadow: 3px 4px 10px 1pxrgba(0, 0, 0, 0.3);
+    box-sizing: border-box;
+}
+
+/* Button */
+div.dt-buttons {
+    position: absolute;
+    margin-top: 20px;
+    margin-left: 10px;
+    width: 98%;
+}
+
+/* Delete button & Filter button arrow */
+a.nav-link.dropdown-toggle:after, span.dt-down-arrow {
+    display: none;
+}
+/* Delete icon menu background */
+.dropdown-menu {
+    background: #262E43;
+}
+/* Delete icon menu item */
+a.dropdown-item {
+    color: white;
+    z-index: 2;
+}
+a.dropdown-item:hover {
+    color: white;
+    background: none;
+}
+
+/* Checkbox */
+button.dt-button.buttons-columnVisibility:before,
+button.dt-button.buttons-columnVisibility.active span:before {
+    display:block;
+    position:absolute;
+    top:1.2em;
+    left:0;
+    width:14px;
+    height:14px;
+    box-sizing:border-box;
+}
+
+div.dt-button-collection button.dt-button {
+    color: white;
+}
+
+div.dt-button-collection button.dt-button.active:active {
+    background: none !important;
+}
+
+div.dt-button-collection button.dt-button.active:not(.disabled){
+    background: #262E43;
+    color: white;
+}
+
+div.dt-button-collection button.dt-button:nth-child(3) {
+    pointer-events: none;
+}
+div.dt-button-collection button.dt-button.active:nth-child(3) {
+    color: #B9B9B9;
+    background: #474B59;
+}
+
+div.dt-button-collection button.dt-button:last-child {
+    position: relative;
+    color: white;
+    border: none;
+    outline: none;
+    background: none;
+    text-align: right;
+    text-decoration: underline;
+}
+
+button.dt-button.buttons-columnVisibility:before {
+    content:' ';
+    margin-top:-6px;
+    margin-left:10px;
+    border:1px solid white;
+    border-radius:3px;
+    background-color: #262E43;
+}
+
+button.dt-button.buttons-columnVisibility.active span:before {
+    content:'\2713';
+    margin-top:-11px;
+    margin-left:10px;
+    text-align:center;
+
+}
+
+button.dt-button.buttons-columnVisibility span {
+    margin-left:20px;
+}
+
+i.fa-solid.fa-trash-can {
+    color: white;
+}
+
+button {
+    background: none;
+    border: none;
+    outline: none;
+}
+
+/****************************************************/
+
+/* DataTable body */
+table#example.table.table-striped.dataTable.no-footer {
+    position: relative;
+    padding-top: 25px;
+    margin-left: 12px;
+    max-width: 98% !important;
+    font-size: 12px;
+}
+
+/* Table body background color */
+.table-striped>tbody>tr:nth-child(odd)>td,
+.table-striped>tbody>tr:nth-child(odd)>th {
+  background-color: #262E43;
+  color: white;
+  border: none;
+}
+
+.table-striped>tbody>tr:nth-child(even)>td, .table-striped>thead>tr>th,
+.table-striped>tbody>tr:nth-child(even)>th {
+   background-color: #101529;
+   color: white;
+   border: none;
+}
+
+
+/****************************************************/
+
+/** Status Indicator Icon **/
+
+.status_icon {
+    text-align: center;
+}
+
+.fa-circle-xmark {
+    color: #BD2130;
+}
+
+.fa-circle-check {
+    color: #28A745;
+}
+
+/****************************************************/
+
+ /** Page Pagination* */
+div.dataTables_wrapper div.dataTables_paginate {
+    position: relative;
+    bottom: 20px;
+    padding-right: 20px;
+}
+
+/** Column Previous **/
+.dataTables_wrapper .dataTables_paginate .paginate_button {
+    padding: 0;
+    margin-left: 0;
+    border: none;
+}
+
+.page-item.disabled .page-link {
+    color: #6c757d;
+    background: #22273C;
+    border: 1px solid #6c757d;
+}
+
+ /** Column 1,2,3... **/
+.page-link{
+    background: #282E43;
+    border: 1px solid #6c757d;
+    color: #6c757d;
+}
+
+/** Show entries Label **/
+.dataTables_info, .dataTables_length{
+    color: white !important;
+    padding-left: 15px;
+    width: 300px;
+}
+
+/** Show entries Select **/
+select.form-select.form-select-sm{
+    width: auto !important;
+    background: #22273C !important;
+    color: white;
+}
+
+.page-link:hover {
+    background: none;
+    border: none;
+}
