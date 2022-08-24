@@ -53,4 +53,4 @@ class Record(models.Model):
         db_table = "record"
 
     def __str__(self):
-        return self.record_datetime
+        return self.record_id

@@ -1,5 +1,4 @@
 {% extends 'transfer/base.html' %}
-
 {% block body %}
 <table id="example" class="table table-striped">
         <thead>
@@ -24,9 +23,33 @@
                 <td>{{ data.record_datetime }}</td>
                 <td>{{ data.record_status }}</td>
                 <td>{{ data.record_exception_messages }}</td>
-                <td><a href="delete/"><button type="button"><i class="fa-solid fa-trash-can"></i></button>
+                <td><a><button type="button" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="fa-solid fa-trash-can"></i></button>
                     </a></td>
             </tr>
+
+            <!-- Modal -->
+            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Confirm Delete ?</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <form method="POST" class="form-control">
+                      <div class="modal-body">
+                            {% csrf_token %}
+                            <div class="alert alert-danger" role="alert">
+                            Confirm Delete ?
+                            </div>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+                        <a href="delete/{{data.record_id}}"><button type="button" class="btn btn-danger">Delete</button></a>
+                      </div>
+                  </form>
+                </div>
+              </div>
+            </div>
             {% endfor %}
         </tbody>
 </table>

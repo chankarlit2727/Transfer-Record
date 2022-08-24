@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 import requests
 from rest_framework import status
 from rest_framework.decorators import api_view
@@ -19,68 +19,16 @@ def index(request):
     return render(request, 'transfer/main.html', {'all_data': all_data})
 
 
-@api_view(['DELETE'])
-def delete(request, pk):
+def get_record(request, pk):
     try:
-        record = Record.objects.get(pk=pk)
+        model = Record.objects.get(record_id=pk)
+        return model
     except Record.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
 
-    if request.method == 'DELETE':
-        record.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
 
-def getLink(request):
-    queryset = Record.objects.all()[:10]
-    return JsonResponse({"link": list(queryset.values())})
+def delete(request, pk):
+    model = get_record(request, pk)
+    model.delete()
+    return redirect('/transfer/')
 
-# class CreateLink(CreateView):
-#     model = Link
-#     fields = ['link_name', 'link_text', 'link_status_code']
-#
-#     def form_valid(self, form):
-#         try:
-#             link_text = form.instance.link_text
-#             clean_link_text = ipaddress.IPv4Address(link_text)
-#             print('valid')
-#             full_link = "https://" + link_text + ":9005/"
-#             print(full_link)
-#             link_ip_address = requests.get(full_link, auth=('admin', 'Puw5uTru'), verify=False)
-#             status = link_ip_address.status_code
-#             print(status)
-#             if status == 200:
-#                 form.instance.link_text = full_link
-#                 form.instance.link_status_code = True
-#                 form.save()
-#                 return super().form_valid(form)
-#         except:
-#             print('Invalid')
-#             form.instance.link_text = full_link
-#             form.instance.link_status_code = False
-#             form.save()
-#             return super().form_valid(form)
-#
-#
-# class UpdateLink(UpdateView):
-#     model = Link
-#     fields = ['link_name', 'link_text', 'link_status_code']
-#
-#     def form_valid(self, form):
-#         try:
-#             link_text = form.instance.link_text
-#             link_ip_address = requests.get(link_text, auth=('admin', 'Puw5uTru'), verify=False)
-#             status = link_ip_address.status_code
-#             if status == 200:
-#                 form.instance.link_status_code = True
-#                 form.save()
-#
-#             return super().form_valid(form)
-#         except:
-#             form.instance.link_status_code = False
-#             form.save()
-#             return super().form_valid(form)
-#
-#
-# class DeleteLink(DeleteView):
-#     model = Link
-#     success_url = reverse_lazy('index')
