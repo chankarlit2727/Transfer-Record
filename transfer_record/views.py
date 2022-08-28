@@ -1,26 +1,50 @@
 from django.db.models import Q
-from django.shortcuts import render, redirect
-import requests
 from model_utils import Choices
-from rest_framework import status, permissions, serializers
+from rest_framework import status, permissions, serializers, viewsets
 from rest_framework.decorators import api_view, permission_classes
+
+from serializers import RecordSerializer, DeleteRecordSerializer
 from .models import Record
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from rest_framework.response import Response
 
 
-@api_view(['GET'])
-@permission_classes((permissions.AllowAny,))
-def record_data(request):
-    record = query_record_by_args(**request.query_params)
-    record_serializer = TaskSerializerScan(record['items'], many=True)
-    response = {
-        'draw': record['draw'],
-        'recordsTotal': record['total'],
-        'recordsFiltered': record['total'],
-        'data': record_serializer.data,
-    }
-    return Response(response)
+def index(request):
+    return render(request, 'transfer/main.html')
+
+
+class RecordViewSet(viewsets.ModelViewSet):
+    queryset = Record.objects.all()
+    serializer_class = RecordSerializer
+
+    def list(self, request, **kwargs):
+        try:
+            record = query_record_by_args(**request.query_params)
+            record_serializer = RecordSerializer(record['items'], many=True)
+            response = {
+                'draw': record['draw'],
+                'recordsTotal': record['total'],
+                'recordsFiltered': record['total'],
+                'data': record_serializer.data,
+            }
+            return Response(response, status=status.HTTP_200_OK)
+        except Exception as e:
+            return Response(e, status=status.HTTP_404_NOT_FOUND)
+
+    def retrieve(self, request, pk=None):
+        record = Record.objects.all()
+        record_id = get_object_or_404(record, pk=pk)
+        serializer = RecordSerializer(record)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+class DeleteRecordViewSet(viewsets.ModelViewSet):
+    queryset = Record.objects.all()
+    serializer_class = DeleteRecordSerializer
+
+    def destroy(self, request, pk=None, *args, **kwargs):
+        instance = self.get_object()
+        return super(DeleteRecordViewSet, self).destroy(request, pk, *args, **kwargs)
 
 
 def query_record_by_args(**kwargs):
@@ -33,7 +57,7 @@ def query_record_by_args(**kwargs):
     order = kwargs.get('order[0][dir]', None)[0]
 
     order_column = SCAN_ORDER_COLUMN_CHOICES[order_column]
-    if order == 'desc':
+    if order == 'asc':
         order_column = '-' + order_column
 
     queryset = Record.objects.all()
@@ -57,12 +81,6 @@ def query_record_by_args(**kwargs):
     }
 
 
-class TaskSerializerScan(serializers.ModelSerializer):
-    class Meta:
-        model = Record
-        fields = '__all__'
-
-
 SCAN_ORDER_COLUMN_CHOICES = Choices(
     ('0', 'record_progress'),
     ('1', 'record_type'),
@@ -74,24 +92,15 @@ SCAN_ORDER_COLUMN_CHOICES = Choices(
 )
 
 
-def index(request):
-    return render(request, 'transfer/main.html')
-
-
-@api_view(['DELETE'])
-@permission_classes((permissions.AllowAny,))
-def delete(request, pk):
-    model = get_record(request, pk)
-    model.delete()
-    return Response(status=status.HTTP_204_NO_CONTENT)
-
-
-def get_record(request, pk):
-    try:
-        model = Record.objects.get(record_id=pk)
-        return model
-    except Record.DoesNotExist:
-        return Response(status=status.HTTP_404_NOT_FOUND)
-
-
-
+# def get_record(self, pk):
+#     try:
+#         self.model = Record.objects.get(record_id=pk)
+#         return self.model
+#     except Record.DoesNotExist:
+#         return Response(status=status.HTTP_404_NOT_FOUND)
+#
+#
+# def delete(self, pk):
+#     model = self.get_record(self, pk)
+#     model.delete()
+#     return Response(status=status.HTTP_204_NO_CONTENT)

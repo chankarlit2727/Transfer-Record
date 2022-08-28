@@ -1,7 +1,7 @@
 var dTable = $('#example').DataTable({
     dom: '<"toolbar">Bfrtlip',
     "serverSide": true,
-    "ajax": { "url": "record_data", "type": "GET"},
+    "ajax": { "url": "/api/record/", "type": "GET"},
     columns: [
         { data: 'record_progress', width: '6%', searchable: false, className: "status_icon",
         render: function (data, type, row) {
@@ -97,13 +97,16 @@ var dTable = $('#example').DataTable({
         }
     ],
     "lengthMenu": [[10, 25, 50, 100, 100000000], [10, 25, 50, 100, "All"]],
-    order: [[0, 'asc']],
+    order: [[1, 'asc']],
     language: {
                     search: "_INPUT_",
                     searchPlaceholder: "Search..."
                 },
-    responsive: true,
+    responsive: false,
+    deferRender: true,
     autoWidth: false,
+    scrollY: 410,
+    scrollCollapse: true,
     stateSave: true,
     stateLoadParams: function( settings, data ) {
         if (data.order) delete data.order;
@@ -141,7 +144,7 @@ $('#example tbody').on('click', 'button', function () {
 
 $('#confirm').on('click', '#delete', function (e) {
     $.ajax({
-        url: 'record_data/delete/' + id,
+        url: '/api/delete/' + id,
         method: 'DELETE',
         success:(function (data, textStatus, xhr) {
             location.reload();
